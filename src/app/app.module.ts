@@ -7,17 +7,28 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { ComponentOneComponent } from './component-one/component-one.component';
 import { ComponentTwoComponent } from './component-two/component-two.component';
+import { ChatComponent } from './chat/chat.component';
+
+import { ChatActivate } from './chat/route-guards/chat-activate'
+import { ChatDeActivate } from "app/chat/route-guards/chat-deactivate";
  
 const appRoutes : Routes = [
   { path: "componentOne", component: ComponentOneComponent},
-  { path: "componentTwo", component: ComponentTwoComponent}
+  { path: "componentTwo", component: ComponentTwoComponent},
+  { 
+    path: "chat", 
+    component: ChatComponent,
+    canActivate: [ChatActivate],
+    canDeactivate: [ChatDeActivate]
+  }
 ]
  
 @NgModule({
   declarations: [
     AppComponent,
     ComponentOneComponent,
-    ComponentTwoComponent
+    ComponentTwoComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +36,9 @@ const appRoutes : Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [ 
+    ChatActivate,
+    ChatDeActivate ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
